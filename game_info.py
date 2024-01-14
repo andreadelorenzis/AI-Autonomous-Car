@@ -30,6 +30,11 @@ class GameInfo:
             f"Alive: {stats['num_alive']}"
         ]
 
+        if 'mutation_rate' in stats and 'num_cars' and 'simulation_index' in stats:
+            info_texts.append(f"Mutation Rate: {stats['mutation_rate']}")
+            info_texts.append(f"Number of Cars: {stats['num_cars']}")
+            info_texts.append(f"Simulation: {stats['simulation_index']}")
+
         for text in info_texts:
             render = font.render(text, True, (255, 255, 255))
             self.win.blit(render, (x, y))
@@ -37,10 +42,12 @@ class GameInfo:
 
         pygame.display.update()
 
-    def victory_menu(self):
+    # Restituisce False se si vuole andare avanti con una nuova generazione,
+    # True se si vuole terminare il programma e stampare i risultati
+    def victory_menu(self, last_gen=False):
         running = True
         while running:
-            buttons = self.draw_victory_menu(self.win)
+            buttons = self.draw_victory_menu(self.win, last_gen)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -51,11 +58,14 @@ class GameInfo:
                     if "save" in buttons and buttons["save"][1].collidepoint((mouse_x, mouse_y)) and self.mode == "TRAINING":
                         self.save_trained_car(self.winner_genome)
                         print("Macchina salvata")
-                        running = False
-        pygame.quit()
-        sys.exit()
+                        # running = False
+                        return True
+                    elif "new_generation" in buttons and buttons["new_generation"][1].collidepoint((mouse_x, mouse_y)):
+                        print("Nuova generazione")
+                        # running = False
+                        return False
 
-    def draw_victory_menu(self, win):
+    def draw_victory_menu(self, win, last_gen):
         win.fill((0, 0, 0))  # Sfondo nero
         font = pygame.font.SysFont("comicsans", 60)
         button_font = pygame.font.SysFont("comicsans", 40)
@@ -66,14 +76,18 @@ class GameInfo:
         buttons = {}
         if self.mode == "TRAINING":
             buttons["save"] = ("Salva macchina", pygame.Rect(self.screen_width // 2 - 150, 300, 300, 50))
+            if not last_gen:
+                buttons["new_generation"] = ("Nuova generazione", pygame.Rect(self.screen_width // 2 - 150, 400, 300, 50))
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
         for key, (text, rect) in buttons.items():
             text_color = (255, 255, 0) if rect.collidepoint((mouse_x, mouse_y)) else (255, 255, 255)
             text_surf = button_font.render(text, True, text_color)
-            win.blit(text_surf, (rect.x + (rect.width - text_surf.get_width()) // 2, rect.y + (rect.height - text_surf.get_height()) // 2))
-            pygame.draw.line(win, text_color, (rect.left, rect.bottom + 3), (rect.right, rect.bottom + 3), 2)
+            text_width = text_surf.get_width()
+            text_x = rect.x + (rect.width - text_width) // 2
+            win.blit(text_surf, (text_x, rect.y + (rect.height - text_surf.get_height()) // 2))
+            pygame.draw.line(win, text_color, (text_x, rect.bottom + 3), (text_x + text_width, rect.bottom + 3), 2)
 
         pygame.display.update()
         return buttons
@@ -134,13 +148,12 @@ class GameInfo:
         pygame.display.update()
 
     def track_selection_menu(self, levels, loaded_tracks):
-        square_size = 100
         square_y = 150
         track_y = 300
         square_gap = 10
-        total_squares = self.n_training + self.n_validation
+        total_squares = len(loaded_tracks)
         square_size = 100
-        total_width = total_squares * square_size + (total_squares - 1) * 10
+        total_width = total_squares * square_size + (total_squares - 1) * square_gap
         window_width = self.win.get_width()
         start_x = (window_width - total_width) // 2
 
@@ -221,6 +234,42 @@ class GameInfo:
             back_button_rect = self.draw_button(self.win, back_button_x, self.win.get_height() - 40, "Back to Menu", (255, 0, 0))
             pygame.display.update()
 
+    def draw_track_selection_menu(self, win, loaded_tracks):
+        win.fill((0, 0, 0))
+        window_width = win.get_width()
+        total_squares = self.n_training + self.n_validation
+        square_size = 100
+        total_width = total_squares * square_size + (total_squares - 1) * 10
+        start_x = 50
+        square_y = 150
+        track_y = 300
+
+        # Disegna i quadrati colorati
+        for i in range(total_squares):
+            color = (255, 0, 0) if i < self.n_training else (0, 255, 0)
+            rect = pygame.Rect(start_x + i * (square_size + 10), square_y, square_size, square_size)
+            pygame.draw.rect(win, color, rect)
+
+            # Se un percorso è selezionato per questo quadrato, disegnalo
+            if i < len(self.selected_tracks):
+                img_rect = loaded_tracks[self.selected_tracks[i]].get_rect(center=rect.center)
+                win.blit(loaded_tracks[self.selected_tracks[i]], img_rect)
+
+        # Disegna le immagini dei percorsi in orizzontale con sfondo bianco
+        for i, track_image in enumerate(loaded_tracks):
+            x = start_x + i * (square_size + 10)
+            rect = pygame.Rect(x, track_y, square_size, square_size)
+            pygame.draw.rect(win, (255, 255, 255), rect)
+            img_rect = track_image.get_rect(center=rect.center)
+            win.blit(track_image, img_rect)
+
+            # Se il percorso è già selezionato, rendilo opaco
+            if i in self.selected_tracks:
+                s = pygame.Surface((square_size, square_size))
+                s.set_alpha(128)
+                s.fill((255, 255, 255))
+                win.blit(s, (x, track_y))
+
     def decrease_training(self):
         if self.n_training > 0:
             self.n_training -= 1
@@ -273,38 +322,3 @@ class GameInfo:
 
         return minus_button, plus_button
 
-    def draw_track_selection_menu(self, win, loaded_tracks):
-        win.fill((0, 0, 0))
-        window_width = win.get_width()
-        total_squares = self.n_training + self.n_validation
-        square_size = 100
-        total_width = total_squares * square_size + (total_squares - 1) * 10
-        start_x = 50
-        square_y = 150
-        track_y = 300
-
-        # Disegna i quadrati colorati
-        for i in range(total_squares):
-            color = (255, 0, 0) if i < self.n_training else (0, 255, 0)
-            rect = pygame.Rect(start_x + i * (square_size + 10), square_y, square_size, square_size)
-            pygame.draw.rect(win, color, rect)
-
-            # Se un percorso è selezionato per questo quadrato, disegnalo
-            if i < len(self.selected_tracks):
-                img_rect = loaded_tracks[self.selected_tracks[i]].get_rect(center=rect.center)
-                win.blit(loaded_tracks[self.selected_tracks[i]], img_rect)
-
-        # Disegna le immagini dei percorsi in orizzontale con sfondo bianco
-        for i, track_image in enumerate(loaded_tracks):
-            x = start_x + i * (square_size + 10)
-            rect = pygame.Rect(x, track_y, square_size, square_size)
-            pygame.draw.rect(win, (255, 255, 255), rect)
-            img_rect = track_image.get_rect(center=rect.center)
-            win.blit(track_image, img_rect)
-
-            # Se il percorso è già selezionato, rendilo opaco
-            if i in self.selected_tracks:
-                s = pygame.Surface((square_size, square_size))
-                s.set_alpha(128)
-                s.fill((255, 255, 255))
-                win.blit(s, (x, track_y))

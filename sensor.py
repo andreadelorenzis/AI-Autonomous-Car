@@ -8,6 +8,7 @@ class Sensor:
         self.ray_count = 6
         self.ray_length = 200
         self.ray_spread = 2.79
+        # self.ray_spread = math.pi / 1.5
         self.rays = []
         self.readings = []
         self.last_car_angle = None
