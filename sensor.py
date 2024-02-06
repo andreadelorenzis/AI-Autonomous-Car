@@ -2,6 +2,7 @@ import math
 import pygame
 from utils import lerp
 
+
 class Sensor:
     def __init__(self, car):
         self.car = car
@@ -15,7 +16,7 @@ class Sensor:
         self.last_car_pos = None
 
     def update(self, pos, mask):
-        # Calcola i raggi solo se l'auto si è mossa o ruotata
+        # Only if car has moved or rotated
         if self.last_car_pos != pos or self.last_car_angle != self.car.angle:
             self.cast_rays(pos)
             self.last_car_pos = pos
@@ -33,7 +34,7 @@ class Sensor:
     def cast_rays(self, pos):
         self.rays = []
         for i in range(self.ray_count):
-            # Calcolo l'angolo del raggio
+            # calculate ray angle
             ray_angle = lerp(
                 self.ray_spread/2,
                 -self.ray_spread/2,
@@ -59,14 +60,14 @@ class Sensor:
             x = int(start[0] + dx * i)
             y = int(start[1] + dy * i)
 
-            # Verifica che (x, y) sia all'interno dei limiti della maschera
+            # Check that (x, y) is inside mask
             if 0 <= x < mask_width and 0 <= y < mask_height:
                 if mask.get_at((x, y)):
-                    return (x, y), i  # Punto di intersezione e distanza
+                    return (x, y), i  # intersection point and distance
             else:
                 break
 
-        return None  # Nessuna intersezione trovata
+        return None  # no intersection
 
     def draw(self, win):
         for i, ray in enumerate(self.rays):

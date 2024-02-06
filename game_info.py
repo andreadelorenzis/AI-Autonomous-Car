@@ -2,13 +2,13 @@ import pygame
 import sys
 import pickle
 
+
 class GameInfo:
 
     def __init__(self, win, screen_width, screen_height):
         self.win = win
         self.current_level = 0
         self.mode = "TRAINING"
-        self.winner_genome = None
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.n_training = 3
@@ -18,10 +18,9 @@ class GameInfo:
         self.selected_levels = []
         self.selected_square = 0
 
-
     def draw_statistics(self, stats):
         font = pygame.font.SysFont("comicsans", 20)
-        x, y = 10, 10  # Imposta le coordinate in alto a sinistra
+        x, y = 10, 10
 
         info_texts = [
             f"Generations: {stats['generation']}",
@@ -42,8 +41,6 @@ class GameInfo:
 
         pygame.display.update()
 
-    # Restituisce False se si vuole andare avanti con una nuova generazione,
-    # True se si vuole terminare il programma e stampare i risultati
     def victory_menu(self, last_gen=False):
         running = True
         while running:
@@ -54,30 +51,26 @@ class GameInfo:
                     sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_x, mouse_y = pygame.mouse.get_pos()
-                    # Accedi al rettangolo del pulsante dalla tupla
                     if "save" in buttons and buttons["save"][1].collidepoint((mouse_x, mouse_y)) and self.mode == "TRAINING":
-                        self.save_trained_car(self.winner_genome)
-                        print("Macchina salvata")
-                        # running = False
+                        print("Car saved")
                         return True
                     elif "new_generation" in buttons and buttons["new_generation"][1].collidepoint((mouse_x, mouse_y)):
-                        print("Nuova generazione")
-                        # running = False
+                        print("New generation")
                         return False
 
     def draw_victory_menu(self, win, last_gen):
-        win.fill((0, 0, 0))  # Sfondo nero
+        win.fill((0, 0, 0))
         font = pygame.font.SysFont("comicsans", 60)
         button_font = pygame.font.SysFont("comicsans", 40)
 
-        victory_text = font.render("VITTORIA!", True, (255, 255, 255))
+        victory_text = font.render("Victory!", True, (255, 255, 255))
         win.blit(victory_text, (self.screen_width // 2 - victory_text.get_width() // 2, 100))
 
         buttons = {}
         if self.mode == "TRAINING":
-            buttons["save"] = ("Salva macchina", pygame.Rect(self.screen_width // 2 - 150, 300, 300, 50))
+            buttons["save"] = ("Save car", pygame.Rect(self.screen_width // 2 - 150, 300, 300, 50))
             if not last_gen:
-                buttons["new_generation"] = ("Nuova generazione", pygame.Rect(self.screen_width // 2 - 150, 400, 300, 50))
+                buttons["new_generation"] = ("New generation", pygame.Rect(self.screen_width // 2 - 150, 400, 300, 50))
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -92,38 +85,33 @@ class GameInfo:
         pygame.display.update()
         return buttons
 
-    def save_trained_car(self, genome, filename="trained_car.pkl"):
-        with open(filename, 'wb') as file:
-            pickle.dump(genome, file)
-
     def draw_menu(self, menu_options, title):
-        self.win.fill((0, 0, 0))  # Sfondo nero
+        self.win.fill((0, 0, 0))
         title_font = pygame.font.SysFont("comicsans", 60)
         option_font = pygame.font.SysFont("comicsans", 40)
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
-        # Disegna il titolo
+        # title
         title_surf = title_font.render(title, True, (255, 255, 255))
         title_rect = title_surf.get_rect(center=(self.screen_width // 2, 100))
         self.win.blit(title_surf, title_rect)
 
-        # Disegna le opzioni del menu
+        # menu options
         for i, option in enumerate(menu_options):
             text_surf = option_font.render(option, True, (255, 255, 255))
             text_rect = text_surf.get_rect(center=(self.screen_width // 2, 200 + i * 60))
 
-            # Cambia il colore del testo se il mouse è sopra l'opzione
+            # hover
             if text_rect.collidepoint((mouse_x, mouse_y)):
                 text_surf = option_font.render(option, True, (255, 255, 0))  # Cambia il colore in giallo
 
             self.win.blit(text_surf, text_rect)
 
-            # Disegna la linea di sottolineatura
+            # underline
             pygame.draw.line(self.win, (255, 255, 255), (text_rect.left, text_rect.bottom + 3), (text_rect.right, text_rect.bottom + 3), 2)
 
         pygame.display.update()
-
 
     def game_over_menu(self):
         self.draw_game_over_menu()
@@ -177,7 +165,7 @@ class GameInfo:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_x, mouse_y = event.pos
 
-                    # Gestione click sui quadrati colorati
+                    # Click colored boxes
                     for i in range(self.n_training + self.n_validation):
                         square_x = start_x + i * (square_size + square_gap)
                         if square_x <= mouse_x <= square_x + square_size and square_y <= mouse_y <= square_y + square_size:
@@ -186,7 +174,7 @@ class GameInfo:
                                 self.selected_tracks.pop(i)
                                 break
 
-                    # Gestione click sulle immagini dei percorsi
+                    # Click images
                     for i in range(len(levels)):
                         track_x = start_x + i * (square_size + square_gap)
                         if track_x <= mouse_x <= track_x + square_size and track_y <= mouse_y <= track_y + square_size:
@@ -194,7 +182,7 @@ class GameInfo:
                                 self.selected_tracks.append(i)
                                 break
 
-                    # Gestione click pulsanti n_training
+                    # Click n_training + -
                     if minus_training.collidepoint((mouse_x, mouse_y)):
                         if self.n_training + self.n_validation > 0:
                             self.decrease_training()
@@ -202,7 +190,7 @@ class GameInfo:
                         if self.n_training + self.n_validation < 6:
                             self.increase_training()
 
-                    # Gestione click su pulsanti n_validation
+                    # Click n_validation + -
                     if minus_validation.collidepoint((mouse_x, mouse_y)):
                         if self.n_training + self.n_validation > 0:
                             self.decrease_validation()
@@ -210,7 +198,7 @@ class GameInfo:
                         if self.n_training + self.n_validation < 6:
                             self.increase_validation()
 
-                    # Gestione click pulsanti save e back
+                    # Click save e back
                     if save_button_rect and save_button_rect.collidepoint(mouse_x, mouse_y):
                         self.save_levels()
                         self.track_config_changed = True
@@ -224,38 +212,34 @@ class GameInfo:
             minus_training, plus_training = self.draw_buttons(self.win, control_center_x - 150, control_y, f"Training: {self.n_training}")
             minus_validation, plus_validation = self.draw_buttons(self.win, control_center_x + 50, control_y, f"Validation: {self.n_validation}")
 
-            # Calcola la posizione dei pulsanti
+            # Draw buttons
             button_width = 100
             save_button_x = self.win.get_width() // 2 - button_width
             back_button_x = self.win.get_width() // 2 + 20
-
-            # Disegna i pulsanti
             save_button_rect = self.draw_button(self.win, save_button_x, self.win.get_height() - 40, "Save", (0, 255, 0))
             back_button_rect = self.draw_button(self.win, back_button_x, self.win.get_height() - 40, "Back to Menu", (255, 0, 0))
             pygame.display.update()
 
     def draw_track_selection_menu(self, win, loaded_tracks):
         win.fill((0, 0, 0))
-        window_width = win.get_width()
         total_squares = self.n_training + self.n_validation
         square_size = 100
-        total_width = total_squares * square_size + (total_squares - 1) * 10
         start_x = 50
         square_y = 150
         track_y = 300
 
-        # Disegna i quadrati colorati
+        # Draw colored boxes
         for i in range(total_squares):
             color = (255, 0, 0) if i < self.n_training else (0, 255, 0)
             rect = pygame.Rect(start_x + i * (square_size + 10), square_y, square_size, square_size)
             pygame.draw.rect(win, color, rect)
 
-            # Se un percorso è selezionato per questo quadrato, disegnalo
+            # Draw boxed images
             if i < len(self.selected_tracks):
                 img_rect = loaded_tracks[self.selected_tracks[i]].get_rect(center=rect.center)
                 win.blit(loaded_tracks[self.selected_tracks[i]], img_rect)
 
-        # Disegna le immagini dei percorsi in orizzontale con sfondo bianco
+        # Draw images
         for i, track_image in enumerate(loaded_tracks):
             x = start_x + i * (square_size + 10)
             rect = pygame.Rect(x, track_y, square_size, square_size)
@@ -263,7 +247,7 @@ class GameInfo:
             img_rect = track_image.get_rect(center=rect.center)
             win.blit(track_image, img_rect)
 
-            # Se il percorso è già selezionato, rendilo opaco
+            # If track is already selected, disable
             if i in self.selected_tracks:
                 s = pygame.Surface((square_size, square_size))
                 s.set_alpha(128)
