@@ -1,21 +1,18 @@
 # Self-driving car in 2D environment, using NEAT genetic algorithm
 
-Simulazione 2D per allenare alla guida autonoma un auto che deve percorrere una serie di percorsi di difficoltà crescente. Sfrutta delle reti neurali che evolvono grazie all'algoritmo genetico NEAT. Per una panoramica completa di come è stata implementata la simulazione e dei risultati raggiunti è possibile leggere il seguente <a href="report/report.pdf">report</a>.
+2D simulation to train an autonomous car that must navigate a series of increasingly challenging tracks. It uses neural networks that evolve through thanks to the NEAT genetic algorithm. For a complete overview of the simulation's implementation and the achieved results, check out the following <a href="report/report.pdf" target="_blank">report</a>.
 
 <p align="center">
   <img src="imgs/video1.gif" alt="Splash screen" width="400"/>
 </p>
 
-### Modalità
-1. **Simulazione:** scelta di un range di valori per alcuni parametri significativi dell algoritmo, e simulazione per un numero
-prestabilito di generazioni. La simulazione viene svolta per ogni variazione nei parametri dell'algoritmo. Al termine vengono 
-generati dei grafici, per visualizzare quale variazione porta ai migliori risultati. La simulazione può essere eseguita su più
-percorsi uno dopo l'altro (curriculum based learning).
-2. **Allenamento:** modalità per allenare il modello su un certo numero di parametri per un numero illimitato di generazioni, con 
-possibilità di salvare il modello migliore in ogni momento.
-3. **Validazione:** modalità per validare un modello allenato precedentemente salvato, su un certo numero di percorsi.
+### Modes
+1. **Simulazione:** in the main file, you can choose a range of values for key algorithm parameters, then simulate the behavior for a set number of generations. A simulation is run for each variation. At the end, graphs are generated to show which variations yields the best results. The simulation can run on multiple tracks consecutively.
+2. **Allenamento:** train the model on a set of parameters for an unlimited number of generations, with automatic saving of the best model.
+3. **Validazione:** validate the previously trained model on one or more selected tracks.
+4. **Modifica percorsi:** change the training and/or validation tracks.
 
-Sono stati usati 6 percorsi, che possono essere selezionati o deselezionati tramite l'opzione di menu "Percorsi".
+Six tracks are used, which can be selected or deselected via the "Tracks" menu option.
 
 <p align="center">
   <img src="imgs/circuito_1.png" alt="track 1" width="150" style="margin-right: 20px"/>
@@ -25,24 +22,24 @@ Sono stati usati 6 percorsi, che possono essere selezionati o deselezionati tram
   <img src="imgs/circuito_5.png" alt="track 1" width="150"/>
 </p>
 
-## Come eseguire il progetto
+## How to run the project
 
-### 1. Clonare il repository
+### 1. Clone the repository
 
-Prima di tutto, clona il repository sul tuo sistema locale:
+First, clone the repository to your local system:
 ```bash
 git clone https://github.com/tuo-utente/tuo-progetto.git
 cd AI-Autonomous-Car
 ```
 
-### 2. Creare un ambiente virtuale
+### 2. Create a virtual environment
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Installare le dipendenze e lanciare il programma
+### 3. Install dependencies and run the program
 
 ```bash
 pip install -r requirements.txt
@@ -50,4 +47,4 @@ python3 main.py
 ```
 
 ## Report
-Per maggiori dettagli sulla simulazione e i risultati raggiunti, consultare il seguente report: <a href="report/report.pdf">report completo</a>.
+For more details on the simulation and the achieved results, refer to the following: <a href="report/report.pdf" target="_blank">full report</a>.
