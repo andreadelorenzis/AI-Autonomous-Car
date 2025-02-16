@@ -1,16 +1,16 @@
 # Self-driving car in 2D environment, using NEAT genetic algorithm
 
-2D simulation to train an autonomous car that must navigate a series of increasingly challenging tracks. It uses neural networks that evolve through thanks to the NEAT genetic algorithm. For a complete overview of the simulation's implementation and the achieved results, check out the following <a href="report/report.pdf" target="_blank">report</a>.
+2D simulation to train an autonomous car that must navigate a series of increasingly challenging tracks. It uses neural networks that evolve thanks to the NEAT genetic algorithm. For a complete overview of the simulation's implementation and the achieved results, check out the following <a href="report/report.pdf" target="_blank">report</a>.
 
 <p align="center">
   <img src="imgs/video1.gif" alt="Splash screen" width="400"/>
 </p>
 
 ### Modes
-1. **Simulazione:** in the main file, you can choose a range of values for key algorithm parameters, then simulate the behavior for a set number of generations. A simulation is run for each variation. At the end, graphs are generated to show which variations yields the best results. The simulation can run on multiple tracks consecutively.
-2. **Allenamento:** train the model on a set of parameters for an unlimited number of generations, with automatic saving of the best model.
-3. **Validazione:** validate the previously trained model on one or more selected tracks.
-4. **Modifica percorsi:** change the training and/or validation tracks.
+1. **Simulation:** in the main file, you can choose a range of values for key algorithm parameters, then simulate the behavior for a set number of generations. A simulation is run for each variation. At the end, graphs are generated to show which variations yields the best results. The simulation can run on multiple tracks consecutively.
+2. **Training:** train the model on a set of parameters for an unlimited number of generations, with automatic saving of the best model.
+3. **Validation:** validate the previously trained model on one or more selected tracks.
+4. **Change tracks:** change the training and/or validation tracks.
 
 Six tracks are used, which can be selected or deselected via the "Tracks" menu option.
 
