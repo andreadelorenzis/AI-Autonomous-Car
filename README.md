@@ -2,8 +2,11 @@
 
 Una simulazione 2D per allenare alla guida autonoma un auto che deve percorrere una serie di percorsi di difficoltà crescente. Sfrutta delle reti neurali che evolvono grazie all'algoritmo genetico NEAT. Piccolo progetto divertente creato per il corso universitario di Machine Learning :)
 
+
 <p align="center">
-  <img src="imgs/video.gif" alt="Splash screen" width="200"/>
+  <img src="imgs/video.gif" alt="Track 1" width="400" style="margin-right: 20px"/>
+  <img src="imgs/video.gif" alt="Track 2" width="400" style="margin-right: 20px"/>
+  <img src="imgs/video.gif" alt="Track 3" width="400"/>
 </p>
 
 
