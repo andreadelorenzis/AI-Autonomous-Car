@@ -24,3 +24,30 @@ Sono stati usati 6 percorsi, che possono essere selezionati o deselezionati tram
   <img src="imgs/circuito_4.png" alt="track 1" width="150" style="margin-right: 20px"/>
   <img src="imgs/circuito_5.png" alt="track 1" width="150"/>
 </p>
+
+## Come eseguire il progetto
+
+### 1. Clonare il repository
+
+Prima di tutto, clona il repository sul tuo sistema locale:
+```bash
+git clone https://github.com/tuo-utente/tuo-progetto.git
+cd AI-Autonomous-Car
+```
+
+### 2. Creare un ambiente virtuale
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Installare le dipendenze e lanciare il programma
+
+```bash
+pip install -r requirements.txt
+python3 main.py
+```
+
+## Report
+Per maggiori dettagli sulla simulazione e i risultati raggiunti, consultare il seguente report: <a href="report/report.pdf">report completo</a>.
