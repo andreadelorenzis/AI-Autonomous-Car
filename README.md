@@ -15,11 +15,11 @@
 Six tracks are used, which can be selected or deselected via the "Tracks" menu option.
 
 <p align="center">
-  <img src="imgs/circuito_1.png" alt="track 1" width="150" style="margin-right: 20px"/>
-  <img src="imgs/circuito_2.png" alt="track 1" width="150" style="margin-right: 20px"/>
-  <img src="imgs/circuito_3.png" alt="track 1" width="150" style="margin-right: 20px"/>
-  <img src="imgs/circuito_4.png" alt="track 1" width="150" style="margin-right: 20px"/>
-  <img src="imgs/circuito_5.png" alt="track 1" width="150"/>
+  <img src="imgs/circuito_1.png" alt="track 1" width="130" style="margin-right: 20px"/>
+  <img src="imgs/circuito_2.png" alt="track 1" width="130" style="margin-right: 20px"/>
+  <img src="imgs/circuito_3.png" alt="track 1" width="130" style="margin-right: 20px"/>
+  <img src="imgs/circuito_4.png" alt="track 1" width="130" style="margin-right: 20px"/>
+  <img src="imgs/circuito_5.png" alt="track 1" width="140"/>
 </p>
 
 ## How to run the project
