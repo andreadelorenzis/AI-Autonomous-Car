@@ -2,7 +2,10 @@
 
 Una simulazione 2D per allenare alla guida autonoma un auto che deve percorrere una serie di percorsi di difficoltà crescente. Sfrutta delle reti neurali che evolvono grazie all'algoritmo genetico NEAT. Piccolo progetto divertente creato per il corso universitario di Machine Learning :)
 
-![](https://github.com/andreadelorenzis/AI-Autonomous-Car/blob/main/imgs/video.gif)
+<p align="center">
+  <img src="imgs/video.gif" alt="Splash screen" width="200"/>
+</p>
+
 
 ### Modalità
 1. **Simulazione:** scelta di un range di valori per alcuni parametri significativi dell algoritmo, e simulazione per un numero
