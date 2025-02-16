@@ -18,9 +18,9 @@ possibilità di salvare il modello migliore in ogni momento.
 Sono stati usati 6 percorsi, che possono essere selezionati o deselezionati tramite l'opzione di menu "Percorsi".
 
 <p align="center">
-  <img src="imgs/circuito_1.png" alt="track 1" width="200" style="margin-right: 20px"/>
-  <img src="imgs/circuito_2.png" alt="track 1" width="200" style="margin-right: 20px"/>
-  <img src="imgs/circuito_3.png" alt="track 1" width="200" style="margin-right: 20px"/>
-  <img src="imgs/circuito_4.png" alt="track 1" width="200" style="margin-right: 20px"/>
-  <img src="imgs/circuito_5.png" alt="track 1" width="200"/>
+  <img src="imgs/circuito_1.png" alt="track 1" width="150" style="margin-right: 20px"/>
+  <img src="imgs/circuito_2.png" alt="track 1" width="150" style="margin-right: 20px"/>
+  <img src="imgs/circuito_3.png" alt="track 1" width="150" style="margin-right: 20px"/>
+  <img src="imgs/circuito_4.png" alt="track 1" width="150" style="margin-right: 20px"/>
+  <img src="imgs/circuito_5.png" alt="track 1" width="150"/>
 </p>
