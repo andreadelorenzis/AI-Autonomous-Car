@@ -1,9 +1,9 @@
 # Self-driving car in 2D environment, using NEAT genetic algorithm
 
-Simulazione 2D per allenare alla guida autonoma un auto che deve percorrere una serie di percorsi di difficoltà crescente. Sfrutta delle reti neurali che evolvono grazie all'algoritmo genetico NEAT. Per una panoramica completa di come è stata implementata la simulazione e dei risultati raggiunti riferirsi al seguente <a href="report/report.pdf">report</a>.
+Simulazione 2D per allenare alla guida autonoma un auto che deve percorrere una serie di percorsi di difficoltà crescente. Sfrutta delle reti neurali che evolvono grazie all'algoritmo genetico NEAT. Per una panoramica completa di come è stata implementata la simulazione e dei risultati raggiunti è possibile leggere il seguente <a href="report/report.pdf">report</a>.
 
 <p align="center">
-  <img src="imgs/video1.gif" alt="Splash screen" width="200"/>
+  <img src="imgs/video1.gif" alt="Splash screen" width="400"/>
 </p>
 
 ### Modalità
@@ -16,3 +16,11 @@ possibilità di salvare il modello migliore in ogni momento.
 3. **Validazione:** modalità per validare un modello allenato precedentemente salvato, su un certo numero di percorsi.
 
 Sono stati usati 6 percorsi, che possono essere selezionati o deselezionati tramite l'opzione di menu "Percorsi".
+
+<p align="center">
+  <img src="imgs/circuito_1.png" alt="track 1" width="200" style="margin-right: 20px"/>
+  <img src="imgs/circuito_2.png" alt="track 1" width="200" style="margin-right: 20px"/>
+  <img src="imgs/circuito_3.png" alt="track 1" width="200" style="margin-right: 20px"/>
+  <img src="imgs/circuito_4.png" alt="track 1" width="200" style="margin-right: 20px"/>
+  <img src="imgs/circuito_5.png" alt="track 1" width="200"/>
+</p>
